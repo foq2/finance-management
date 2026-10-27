@@ -1,0 +1,26 @@
+{
+  "name": "nest-micro",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "dotenv -e .env -- turbo run dev --concurrency=20",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "migration:up": "turbo run migration:up",
+    "clean": "./clean.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "dotenv-cli": "^11.0.0",
+    "prettier": "^3.7.4",
+    "turbo": "^2.9.14",
+    "typescript": "5.9.2",
+    "tsx": "^4.23.13",
+    "dotenv": "^17.4.2"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
+  }
+}

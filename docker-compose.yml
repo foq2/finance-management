@@ -1,0 +1,23 @@
+services:
+  db:
+    container_name: nest_micro_db
+    extends:
+      file: .docker/compose/postgresql/postgresql.yml
+      service: postgresql
+    ports:
+      - '5554:5432'
+    volumes:
+      - ${PWD}/.docker/volumes/pgdata:/var/lib/postgresql/data
+    networks:
+      - nest-micro-network
+    environment:
+      POSTGRES_USER: ${DEFAULT_PG_USER}
+      POSTGRES_PASSWORD: ${DEFAULT_PG_PASSWORD}
+#      POSTGRES_DB: ${DEFAULT_PG_DATABASE}
+    env_file:
+      - .env
+
+
+networks:
+  nest-micro-network:
+    driver: bridge

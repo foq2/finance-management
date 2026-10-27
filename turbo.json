@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+    },
+    "migration:up": {
+      "cache": false
+    }
+  },
+  "globalDependencies": [".env"],
+  "globalEnv": [
+    "TZ",
+    "NODE_ENV",
+    "FRONTEND_URL",
+    "AUTH_SERVICE_HOST",
+    "AUTH_SERVICE_PORT",
+    "AUTH_SERVICE_URL",
+    "USER_SERVICE_HOST",
+    "USER_SERVICE_PORT",
+    "USER_SERVICE_URL",
+    "GATEWAY_SECRET",
+    "REDIS_URL",
+    "DEFAULT_PG_PORT",
+    "JWT_SECRET"
+  ]
+}
