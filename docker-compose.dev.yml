@@ -56,7 +56,7 @@ services:
       file: .docker/compose/redis/redis.yml
       service: redisinsight
     ports:
-      - '6575:5540'
+      - '${REDIS_INSIGHT_PORT:-6575}:5540'
     networks:
       - nest-micro-dev-network
     volumes:
