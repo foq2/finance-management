@@ -37,9 +37,9 @@ type SwaggerApiOperationOptions = ApiOperationOptions & {
   operationId: string;
 };
 
-type ApiDocumentExtraOption = {
-  isPublic?: true;
-};
+// type ApiDocumentExtraOption = {
+//   isPublic?: true;
+// };
 
 type ApiDocumentOption = {
   operation: SwaggerApiOperationOptions;
@@ -49,7 +49,7 @@ type ApiDocumentOption = {
   response?: SwaggerApiResponseOptions | SwaggerApiResponseOptions[];
   query?: ApiQueryOptions | ApiQueryOptions[];
   param?: ApiParamOptions | ApiParamOptions[];
-  extra?: ApiDocumentExtraOption;
+  // extra?: ApiDocumentExtraOption;
   tags?: string[];
 };
 
@@ -71,7 +71,7 @@ export function ApiDocument(options: ApiDocumentOption) {
   const {
     body,
     tags,
-    extra,
+    // extra,
     param,
     query,
     header,
