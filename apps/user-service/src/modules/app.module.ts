@@ -15,8 +15,8 @@ import {
 import { UserModule } from './user';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import config from '../mikro-orm.config';
 import { CommonCqrsModule } from '@repo/nest-core';
+import mikroOrmConfig from '../mikro-orm.config';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { CommonCqrsModule } from '@repo/nest-core';
         microserviceConfiguration,
       ],
     }),
-    MikroOrmModule.forRoot(config),
+    MikroOrmModule.forRoot(mikroOrmConfig),
     CommonCqrsModule,
     LoggerModule,
     // MicroserviceModule.registerAsync([
