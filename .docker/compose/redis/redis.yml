@@ -1,0 +1,28 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+#    logging:
+#      driver: json-file
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 24h
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  redisinsight:
+    image: redislabs/redisinsight:2.50
+    container_name: redisinsight
+    restart: unless-stopped
+#    logging:
+#      driver: json-file
+    depends_on:
+      redis:
+        condition: service_healthy
+#    healthcheck:
+#      test:
+    environment: {
+      RIPROFILES: '[{"host": "redis", "port": 6379, "name": "Nest Micro Redis Dev"}]'
+    }
