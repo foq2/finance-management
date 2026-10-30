@@ -21,6 +21,10 @@ export const validationSchema = z.looseObject({
   USER_SERVICE_PORT: z.string(),
   USER_SERVICE_URL: z.string(),
   GATEWAY_SECRET: z.string(),
+  USER_SERVICE_TCP_HOST: z.string(),
+  USER_SERVICE_TCP_PORT: z.coerce.number(),
+  FINANCE_SERVICE_TCP_HOST: z.string(),
+  FINANCE_SERVICE_TCP_PORT: z.coerce.number(),
   // API_GATEWAY_PORT: z.string(),
 });
 

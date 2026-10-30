@@ -5,14 +5,14 @@ interface LogBootstrapOptions {
   nodeEnv: NodeEnv;
   logger: LoggerService;
   appPort: number;
-  msListener?: { transport: string; address?: string };
+  // msListener?: { transport: string; address?: string };
 }
 
 export function logBootstrapInfo(
   app: INestApplication,
   logOptions: LogBootstrapOptions,
 ) {
-  const { nodeEnv, logger, appPort, msListener } = logOptions;
+  const { nodeEnv, logger, appPort } = logOptions;
 
   if (nodeEnv === NodeEnv.Production) {
     logger.log(`Application is running on port ${appPort}`);
@@ -25,11 +25,11 @@ export function logBootstrapInfo(
     host = appAddressInfo.address === '::' ? host : appAddressInfo.address;
   }
 
-  if (msListener) {
-    logger.log(
-      `${msListener.transport} Microservice Listener is ready on ${msListener.address || 'Unknown'}`,
-    );
-  }
+  // if (msListener) {
+  //   logger.log(
+  //     `${msListener.transport} Microservice Listener is ready on ${msListener.address || 'Unknown'}`,
+  //   );
+  // }
 
   logger.log(
     `Application is ready.\n` +

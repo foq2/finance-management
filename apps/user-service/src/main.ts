@@ -53,7 +53,6 @@ async function bootstrap() {
     appPort,
     logger,
     nodeEnv,
-    msListener: { transport: 'http', address: 'null' },
   });
 }
 bootstrap();

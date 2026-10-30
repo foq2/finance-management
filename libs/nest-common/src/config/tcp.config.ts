@@ -3,7 +3,11 @@ import { MicroserviceName } from '../enums';
 
 export const tcpConfiguration = registerAs('tcp', () => ({
   [MicroserviceName.UserService]: {
-    host: '0.0.0.0',
-    port: 1234,
+    host: process.env.USER_SERVICE_TCP_HOST,
+    port: +process.env.USER_SERVICE_TCP_PORT,
+  },
+  [MicroserviceName.FinanceService]: {
+    host: process.env.FINANCE_SERVICE_TCP_HOST,
+    port: +process.env.FINANCE_SERVICE_TCP_PORT,
   },
 }));

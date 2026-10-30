@@ -1,7 +1,7 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigType } from '@nestjs/config';
 import { appConfiguration } from '../config';
 import {
   AllExceptionFilter,
@@ -9,14 +9,15 @@ import {
   AppGuard,
   LoggerModule,
   microserviceConfiguration,
+  MicroserviceName,
   tcpConfiguration,
   validate,
 } from '@repo/nest-common';
-import { UserModule } from './user';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { CommonCqrsModule } from '@repo/nest-core';
+import { CommonCqrsModule, MicroserviceModule } from '@repo/nest-core';
 import mikroOrmConfig from '../mikro-orm.config';
+import { Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -35,17 +36,16 @@ import mikroOrmConfig from '../mikro-orm.config';
     MikroOrmModule.forRoot(mikroOrmConfig),
     CommonCqrsModule,
     LoggerModule,
-    // MicroserviceModule.registerAsync([
-    //   {
-    //     name: MicroserviceName.UserService,
-    //     transport: Transport.TCP,
-    //     useFactory: (config: ConfigType<typeof tcpConfiguration>) => {
-    //       return config[MicroserviceName.UserService];
-    //     },
-    //     inject: [tcpConfiguration.KEY],
-    //   },
-    // ]),
-    UserModule,
+    MicroserviceModule.registerAsync([
+      {
+        name: MicroserviceName.UserService,
+        transport: Transport.TCP,
+        useFactory: (config: ConfigType<typeof tcpConfiguration>) => {
+          return config[MicroserviceName.UserService];
+        },
+        inject: [tcpConfiguration.KEY],
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [

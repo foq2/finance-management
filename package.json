@@ -1,5 +1,5 @@
 {
-  "name": "nest-micro",
+  "name": "finance-management",
   "private": true,
   "scripts": {
     "build": "turbo run build",

@@ -11,11 +11,13 @@ import {
   tcpConfiguration,
   PayloadValidationPipe,
   MicroservicePrefix,
+  PinoLogger,
 } from '@repo/nest-common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const logger = new CommonLogger(new PinoLogger({}), {});
+  const app = await NestFactory.create(AppModule, { logger });
 
   const { appPort, appName } = app.get<ConfigType<typeof appConfiguration>>(
     appConfiguration.KEY,
@@ -24,20 +26,21 @@ async function bootstrap() {
     appCommonConfiguration.KEY,
   );
 
-  const logger = app.get(CommonLogger);
-  app.useLogger(logger);
+  // const logger = app.get(CommonLogger);
+  // app.useLogger(logger);
   app.setGlobalPrefix('api');
+  app.enableCors();
   app.useGlobalPipes(new PayloadValidationPipe());
 
   // Microservice listener
-  const { [MicroserviceName.UserService]: userTcpOption } = app.get<
+  const { [MicroserviceName.FinanceService]: financeTcpOption } = app.get<
     ConfigType<typeof tcpConfiguration>
   >(tcpConfiguration.KEY);
 
   app.connectMicroservice<MicroserviceOptions>(
     {
       transport: Transport.TCP,
-      options: userTcpOption,
+      options: financeTcpOption,
     },
     { inheritAppConfig: true },
   );
@@ -45,7 +48,7 @@ async function bootstrap() {
   await app.startAllMicroservices();
 
   // API docs
-  await setupApiDocs(app, appName, [MicroservicePrefix.UserService]);
+  await setupApiDocs(app, appName, [MicroservicePrefix.FinanceService]);
 
   await app.listen(appPort);
 
@@ -53,7 +56,6 @@ async function bootstrap() {
     appPort,
     logger,
     nodeEnv,
-    msListener: { transport: , address: 'null' },
   });
 }
 bootstrap();
