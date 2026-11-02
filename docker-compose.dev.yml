@@ -20,7 +20,7 @@ services:
 #      - .env
 
   db:
-    container_name: nest_micro_dev_db
+    container_name: finance_management_dev_db
     extends:
       file: .docker/compose/postgresql/postgresql.yml
       service: postgresql
@@ -38,7 +38,7 @@ services:
       - .env
 
   redis:
-    container_name: nest_micro_dev_redis
+    container_name: finance_management_dev_redis
     extends:
       file: .docker/compose/redis/redis.yml
       service: redis
@@ -51,7 +51,7 @@ services:
     command: redis-server --appendonly yes --dir /data
 
   redisinsight:
-    container_name: nest_micro_dev_redisinsight
+    container_name: finance_management_dev_redisinsight
     extends:
       file: .docker/compose/redis/redis.yml
       service: redisinsight

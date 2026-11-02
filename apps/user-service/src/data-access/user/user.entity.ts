@@ -1,6 +1,6 @@
 import { BaseSchema } from '@repo/nest-core';
 import { UserRepository } from './user.repository';
-import { defineEntity, p } from '@mikro-orm/core';
+import { defineEntity, p } from '@mikro-orm/postgresql';
 
 export const UserSchema = defineEntity({
   name: 'User',
