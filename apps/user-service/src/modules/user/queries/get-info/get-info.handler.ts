@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetInfoQuery } from './get-info.query';
 import { UserRepository } from '../../../../data-access';
 import { GetInfoResponseDto } from '../../dto';
-import { serialize } from '@mikro-orm/core';
+import { toDto } from '@repo/nest-common';
 
 @QueryHandler(GetInfoQuery)
 export class GetInfoHandler implements IQueryHandler<GetInfoQuery> {
@@ -11,6 +11,6 @@ export class GetInfoHandler implements IQueryHandler<GetInfoQuery> {
   async execute(query: GetInfoQuery): Promise<GetInfoResponseDto> {
     const user = await this.userRepo.findOneOrFail(query.userId);
 
-    return serialize(user);
+    return toDto(GetInfoResponseDto, user);
   }
 }

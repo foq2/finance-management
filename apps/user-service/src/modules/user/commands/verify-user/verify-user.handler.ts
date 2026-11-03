@@ -4,10 +4,10 @@ import { UserRepository } from '../../../../data-access';
 import {
   AppException,
   ERROR_RESPONSE,
+  toDto,
   VerifyUserResponseDto,
 } from '@repo/nest-common';
 import { verifyHashed } from '../../user.util';
-import { plainToInstance } from 'class-transformer';
 
 @CommandHandler(VerifyUserCommand)
 export class VerifyUserHandler implements ICommandHandler<VerifyUserCommand> {
@@ -23,12 +23,6 @@ export class VerifyUserHandler implements ICommandHandler<VerifyUserCommand> {
       throw new AppException(ERROR_RESPONSE.INVALID_CREDENTIALS);
 
     // return token payload data
-    return plainToInstance(
-      VerifyUserResponseDto,
-      { ...user, userId: user.id },
-      {
-        excludeExtraneousValues: true,
-      },
-    );
+    return toDto(VerifyUserResponseDto, { ...user, userId: user.id });
   }
 }

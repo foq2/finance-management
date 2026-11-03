@@ -18,6 +18,8 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { CommonCqrsModule, MicroserviceModule } from '@repo/nest-core';
 import mikroOrmConfig from '../mikro-orm.config';
 import { Transport } from '@nestjs/microservices';
+import { AccountModule } from './account';
+import { TransactionModule } from './transaction';
 
 @Module({
   imports: [
@@ -46,6 +48,8 @@ import { Transport } from '@nestjs/microservices';
         inject: [tcpConfiguration.KEY],
       },
     ]),
+    AccountModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [
