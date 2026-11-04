@@ -15,11 +15,12 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
           transport:
             config.nodeEnv !== NodeEnv.Production
               ? {
-                  target: 'pino-pretty',
+                  target: require.resolve('./pino.transport'),
                   options: {
                     singleLine: true,
                     colorize: true,
                     translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+                    ignore: 'pid,hostname,context',
                   },
                 }
               : undefined,

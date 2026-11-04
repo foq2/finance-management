@@ -37,5 +37,6 @@ export function logBootstrapInfo(
       `  - Swagger : http://${host}:${appPort}/swagger\n` +
       `  - Scalar  : http://${host}:${appPort}/scalar\n` +
       `  - Redoc   : http://${host}:${appPort}/redoc`,
+    { context: 'LogUtil' },
   );
 }

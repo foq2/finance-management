@@ -11,13 +11,11 @@ import {
   tcpConfiguration,
   PayloadValidationPipe,
   MicroservicePrefix,
-  PinoLogger,
 } from '@repo/nest-common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const logger = new CommonLogger(new PinoLogger({}), {});
-  const app = await NestFactory.create(AppModule, { logger });
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
   const { appPort, appName } = app.get<ConfigType<typeof appConfiguration>>(
     appConfiguration.KEY,
@@ -26,8 +24,8 @@ async function bootstrap() {
     appCommonConfiguration.KEY,
   );
 
-  // const logger = app.get(CommonLogger);
-  // app.useLogger(logger);
+  const logger = app.get(CommonLogger);
+  app.useLogger(logger);
   app.setGlobalPrefix('api');
   app.enableCors();
   app.useGlobalPipes(new PayloadValidationPipe());

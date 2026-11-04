@@ -40,9 +40,10 @@ export class GatewayModule implements NestModule {
 
   configure(consumer: MiddlewareConsumer) {
     const publicRoutes = [
+      ':service/api',
       ':service/swagger',
       ':service/swagger/:path',
-      ':service/api',
+      // auth service
       'auth-service/api/auth/login',
       'auth-service/api/auth/refreshToken',
     ];
@@ -69,6 +70,15 @@ export class GatewayModule implements NestModule {
         ),
       )
       .forRoutes(MicroservicePrefix.UserService);
+
+    consumer
+      .apply(
+        this.createProxy(
+          this.microserviceConfig.financeService.url,
+          MicroservicePrefix.FinanceService,
+        ),
+      )
+      .forRoutes(MicroservicePrefix.FinanceService);
   }
 
   private createProxy(targetUrl: string, pathPrefix: string) {
